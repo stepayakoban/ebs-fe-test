@@ -1,11 +1,31 @@
-function App() {
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h1>Welcome to the Front-End Developer Test!</h1>
-      <p>We wish you the best of luck. Please make sure to read the README file for
-        instructions.</p>
-    </div>
-  )
+import { useState } from 'react';
+import HomePage from './components/HomePage/HomePage'; 
+import ShoppingCartPage from './components/ShoppingCartPage/ShoppingCartPage';
+
+// Определим типы для продукта и корзины
+interface Product {
+  id: number;
+  name: string;
+  price: number;
 }
 
-export default App
+interface CartItem extends Product {
+  quantity: number;
+}
+
+function App() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const updateCart = (newCart: CartItem[]) => {
+    setCart(newCart);
+  };
+
+  return (
+    <div className="App">
+      {/* Передаем данные и функцию обновления корзины */}
+      <HomePage updateCart={updateCart} />
+      <ShoppingCartPage cartItems={cart} />
+    </div>
+  );
+}
+
+export default App;
